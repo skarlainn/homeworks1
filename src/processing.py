@@ -13,3 +13,14 @@ def filter_by_state(list_of_dict: list[dict[str, Any]], state: str = "EXECUTED")
     (по умолчанию 'EXECUTED')."""
     return [d for d in list_of_dict if d.get("state") == state]
 
+def sort_by_date(list_of_dict: list[dict[str, Any]], reverse: bool = True) -> list[dict[str, Any]]:
+    """Функция, которая принимает список словарей и необязательный параметр,
+    задающий порядок сортировки (по умолчанию — убывание).
+    Функция должна возвращать новый список, отсортированный по дате (date)."""
+    sorted_list = sorted(
+        list_of_dict,
+        key=lambda new_list_of_dict: new_list_of_dict["date"],
+        reverse=reverse,
+    )
+    return sorted_list
+
