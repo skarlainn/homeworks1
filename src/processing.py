@@ -14,13 +14,9 @@ def filter_by_state(list_of_dict: list[dict[str, Any]], state: str = "EXECUTED")
     return [d for d in list_of_dict if d.get("state") == state]
 
 
-def sort_by_date(list_of_dict: list[dict[str, Any]], reverse: bool = True) -> list[dict[str, Any]]:
+def sort_by_date(date_list: list, reverse_list: bool = True) -> list | bool:
     """Функция, которая принимает список словарей и необязательный параметр,
     задающий порядок сортировки (по умолчанию — убывание).
     Функция должна возвращать новый список, отсортированный по дате (date)."""
-    sorted_list = sorted(
-        list_of_dict,
-        key=lambda new_list_of_dict: new_list_of_dict["date"],
-        reverse=reverse,
-    )
+    sorted_list = sorted(date_list, key=lambda date_dict: date_dict.get("date"), reverse=reverse_list)
     return sorted_list

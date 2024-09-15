@@ -1,4 +1,4 @@
-from src.masks import get_mask_account, get_mask_card_number
+from src.masks import get_mask_card_number
 
 
 def mask_account_card(numbers: str) -> str:
@@ -12,6 +12,7 @@ def mask_account_card(numbers: str) -> str:
         mask_card = numbers.replace(numbers[-16:], card)
         return mask_card
 
-def get_date (date: str) -> str:
+
+def get_date(date: str) -> str:
     """Функция, которая принимает на вход строку с датой"""
     return f"{date[8:10]}.{date[5:7]}.{date[0:4]}"
