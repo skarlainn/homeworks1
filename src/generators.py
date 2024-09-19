@@ -1,6 +1,7 @@
 import sys
 from typing import Iterator
 
+
 def filter_by_currency(transactions: list, value: str) -> Iterator:
     """Функция возвращает операции в которых указана валюта"""
     if transactions == []:
