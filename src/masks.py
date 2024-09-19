@@ -1,14 +1,16 @@
 def get_mask_card_number(card_number: str) -> str:
-    """принимает на вход номер карты и возвращает ее маску."""
-    if len(card_number) == 16:
-        return f"{card_number[0:3]} {card_number[4:6]}** **** {card_number[12:16]}"
+    """Принимает на вход номер карты и возвращает ее маску."""
+    card_number = str(card_number)
+    if card_number.isdigit() and len(card_number) == 16:
+        return f"{card_number[:4]} {card_number[4:6]}** **** {card_number[12:]}"
     else:
-        return None
+        return "Ошибка ввода"
 
 
 def get_mask_account(account_number: str) -> str:
-    """принимает на вход номер счета и возвращает его маску."""
-    if len(account_number) == 20:
+    """Принимает на вход номер счета и возвращает его маску."""
+    account_number = str(account_number)
+    if account_number.isdigit() and len(account_number) == 20:
         return f"**{account_number[-4:]}"
     else:
-        return None
+        return "Ошибка ввода"
