@@ -1,22 +1,14 @@
-import sys
 from typing import Iterator
 
 
 def filter_by_currency(transactions: list, value: str) -> Iterator:
     """Функция возвращает операции в которых указана валюта"""
-    if transactions == []:
-        sys.exit("Нет транзакции")
-    for transaction in transactions:
-        if transaction.get("operationAmount").get("currency").get("code") == value:
-            yield transaction
-        elif transaction.get("operationAmount").get("currency").get("code") != value:
-            sys.exit("В транзакции нет такого кода")
+    return (transaction for transaction in transactions if
+            transaction.get("operationAmount").get("currency").get("code") == value)
 
 
 def transaction_descriptions(transactions: list) -> Iterator:
     """Функция возвращает описание каждой операции"""
-    if not transactions:
-        sys.exit("Нет транзакции")
     for transaction in transactions:
         yield transaction.get("description")
 

@@ -63,16 +63,6 @@ def test_filter_by_currency():
     }
 
 
-def test_filter_by_currency_eu():
-    with pytest.raises(SystemExit, match="В транзакции нет такого кода") as exc_info:
-        assert next(filter_by_currency(transactions, "EU")) == exc_info
-
-
-def test_filter_by_currency_empty():
-    with pytest.raises(SystemExit, match="Нет транзакции") as exc_info:
-        gen = filter_by_currency([], "")
-        assert next(gen) == exc_info
-
 
 def test_transaction_descriptions():
     assert next(transaction_descriptions(transactions)) == "Перевод организации"
@@ -93,9 +83,6 @@ def test_transaction_descriptions_1(index, expected):
     assert descriptions[index] == expected
 
 
-def test_transaction_descriptions_empty():
-    with pytest.raises(SystemExit, match="Нет транзакции") as exc_info:
-        assert next(transaction_descriptions([])) == exc_info
 
 
 def test_card_number_generator():
