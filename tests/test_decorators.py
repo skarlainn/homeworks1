@@ -25,3 +25,25 @@ def test_log_error(capsys: Any) -> None:
 
     captured = capsys.readouterr()
     assert captured.out == "function_error error: Test error Inputs: (), {}\n"
+def test_log_to_file() -> None:
+    @log(filename="test_log.txt")
+    def function_file_success(x: int, y: int) -> int:
+        return x + y
+
+    @log(filename="test_log.txt")
+    def function_file_error(x: int, y: int) -> None:
+        raise ValueError("Test error")
+
+    function_file_success(1, 2)
+
+    with open("test_log.txt", 'r') as file:
+        log_content = file.read()
+
+        assert "function_file_success - ok\n" in log_content
+        with pytest.raises(Exception):
+            function_file_error(1, 2)
+
+        with open("test_log.txt", 'r') as f:
+            log_content = f.read()
+
+            assert "function_file_error error: Test error Inputs: (1, 2), {}\n" in log_content
