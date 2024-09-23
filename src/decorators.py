@@ -1,30 +1,37 @@
 from functools import wraps
+from typing import Any, Callable, Optional
 
 
-def log(filename=None):
-    """Функция декоратор логирует начало и конец работы функции результаты и ошибки"""
+def log(filename: Optional[str] = None) -> Callable:
+    """Декоратор, который автоматически логирует начало и конец выполнения функции,
+    а также ее результаты или возникшие ошибки."""
 
-    def decorator(my_func):
-        @wraps(my_func)
-        def wrapper(*args, **kwargs):
-            if not filename:
-                print(f"{my_func.__name__} start")
-                try:
-                    my_func(*args, **kwargs)
-                    print(f"{my_func.__name__} ok")
-                    print(f"{my_func.__name__} finish")
-                except Exception as e:
-                    print(f"{my_func.__name__} error: {e}. Inputs: {args}, {kwargs}")
-            else:
-                try:
-                    my_func(*args, **kwargs)
-                    with open(filename, "w") as file:
-                        file.write(f"{my_func.__name__} ok")
-                except Exception as e:
-                    with open(filename, "w") as file:
-                        file.write(f"{my_func.__name__} error: {e}. Inputs: {args}, {kwargs}")
-            # return result
+    def logging(func: Callable) -> Callable:
+        @wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            try:
+                result = func(*args, **kwargs)
+                if filename:
+                    with open(filename, "a", encoding="utf-8") as file:
+                        file.write(f"{func.__name__} - ok\n")
+                else:
+                    print(f"{func.__name__} - ok")
+            except Exception as error:
+                if filename:
+                    with open(filename, "a", encoding="utf-8") as file:
+                        file.write(f"{func.__name__} error: {error} Inputs: {args}, {kwargs}\n")
+                else:
+                    print(f"{func.__name__} error: {error} Inputs: {args}, {kwargs}")
+                raise
+
+            return result
 
         return wrapper
 
-    return decorator
+    return logging
+
+# Пример использования декоратора:
+@log(filename="mylog.txt")
+def func(x, y):
+    return x + y
+func(1, 2)
