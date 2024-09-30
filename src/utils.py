@@ -1,40 +1,29 @@
 import json
-import os
-from typing import Any, List
+from json import JSONDecodeError
+from typing import Any
 
-from src.external_api import currency_conversion_in_rub
-
-PATH_TO_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "operations.json")
+from src.external_api import currency_conversion
 
 
-def get_data_from_json(path: str) -> List[dict] | Any:
-    """Функция, которая принимает на вход путь до JSON-файла
-    и возвращает список словарей с данными о финансовых транзакциях."""
-
+def financial_transactions(path: str) -> list:
+    """Функция принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
     try:
-        with open(path, encoding="utf-8") as data_file:
+        with open(path, encoding="utf-8") as financial_file:
             try:
-                transactions = json.load(data_file)
-                if isinstance(transactions, list):
-                    return transactions
-                else:
-                    return []
-            except json.JSONDecodeError:
+                transactions = json.load(financial_file)
+            except JSONDecodeError:
                 return []
+        if not isinstance(transactions, list):
+            return []
+        return transactions
     except FileNotFoundError:
         return []
 
 
-def get_amount_in_rub(transaction: dict) -> float | str:
-    """Функция, которая принимает на вход транзакцию и возвращает сумму транзакции (amount) в рублях.
-    Если транзакция была в USD или EUR,
-    происходит обращение к внешнему API для получения текущего курса валют и
-     конвертации суммы операции в рубли."""
-
-    try:
-        if transaction["operationAmount"]["currency"]["code"] == "RUB":
-            return float(transaction["operationAmount"]["amount"])
-        else:
-            return currency_conversion_in_rub(transaction)
-    except KeyError:
-        return "Транзакция не найдена"
+def transaction_amount(trans: dict, currency: str = "RUB") -> Any:
+    """Функция принимает на вход транзакцию и возвращает сумму транзакции в рублях"""
+    if trans["operationAmount"]["currency"]["code"] == currency:
+        amount = trans["operationAmount"]["amount"]
+    else:
+        amount = currency_conversion(trans)
+    return amount
