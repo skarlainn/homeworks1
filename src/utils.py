@@ -1,13 +1,22 @@
 import json
+import logging
 from json import JSONDecodeError
 from typing import Any
 
 from src.external_api import currency_conversion
 
+logger = logging.getLogger("utils")
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler("..\\logs\\utils.log", mode="w", encoding="utf-8")
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(funcName)s - %(levelname)s: %(message)s")
+file_handler.setFormatter(file_formatter)
+logger.addHandler(file_handler)
+
 
 def financial_transactions(path: str) -> list:
     """Функция принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
     try:
+        logger.info("Открытие файла: operations.json")
         with open(path, encoding="utf-8") as financial_file:
             try:
                 transactions = json.load(financial_file)
