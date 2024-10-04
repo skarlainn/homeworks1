@@ -34,4 +34,8 @@ def log(filename: Optional[str] = None) -> Callable:
 @log(filename="mylog.txt")
 def func(x, y):
     return x + y
+feature/homework_12_1
 func(1, 2)
+
+func(1, 2)
+develop
