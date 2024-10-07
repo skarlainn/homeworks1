@@ -7,10 +7,10 @@ from src.masks import get_mask_account, get_mask_card_number
     "card_number, expected",
     [
         ("7000792289606361", "7000 79** **** 6361"),
-        ("70007922896063611", "Ошибка ввода"),
-        ("700079228960636", "Ошибка ввода"),
-        ("70007922896063ab", "Ошибка ввода"),
-        (" ", "Ошибка ввода"),
+        ("70007922896063611", None),
+        ("700079228960636", None),
+        ("70007922896063ab", None),
+        (" ", None),
     ],
 )
 def test_get_mask_card_number(card_number, expected):
@@ -21,10 +21,10 @@ def test_get_mask_card_number(card_number, expected):
     "account_number, expected",
     [
         ("73654108430135874305", "**4305"),
-        ("736541084301358743055", "Ошибка ввода"),
-        ("7365410843013587430", "Ошибка ввода"),
-        ("736541084301358743ab", "Ошибка ввода"),
-        (" ", "Ошибка ввода"),
+        ("736541084301358743055", None),
+        ("7365410843013587430", None),
+        ("736541084301358743ab", None),
+        (" ", None),
     ],
 )
 def test_get_mask_account(account_number, expected):
