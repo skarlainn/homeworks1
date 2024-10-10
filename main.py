@@ -1,7 +1,8 @@
 from time import sleep
-from src.processing import filter_by_state, sort_by_date, search_by_pattern
-from src.read_from_file import read_from_csv, PATH_TO_CSV, read_from_excel, PATH_TO_EXCEL
-from src.utils import financial_transactions, PATH_TO_FILE
+
+from src.processing import filter_by_state, search_by_pattern, sort_by_date
+from src.read_from_file import PATH_TO_CSV, PATH_TO_EXCEL, read_from_csv, read_from_excel
+from src.utils import PATH_TO_FILE, financial_transactions
 from src.widget import get_date, mask_account_card
 
 
@@ -56,7 +57,7 @@ def sorting_by_date(transactions: list) -> list:
 
     sorted_by_date = input("Отсортировать операции по дате? Да/Нет").lower()
     if sorted_by_date in ["да", "yes", "lf"]:
-        rev = input("Отсортировать по возрастанию или по убыванию?").lower()
+        rev = input("Отсортировать по возрастанию или по убыванию? Да/Нет").lower()
         if rev == "по возрастанию":
             return sort_by_date(transactions, is_reverse=False)
         else:
