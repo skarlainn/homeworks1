@@ -63,7 +63,7 @@ def test_financial_transactions_nofile():
     assert financial_transactions('nofile') == []
 
 
-feature/homework_12_2
+
 def test_financial_transactions(path):
     assert financial_transactions(path)[0] == {
         "id": 441945886,
@@ -78,7 +78,7 @@ def test_financial_transactions(path):
         "from": "Maestro 1596837868705199",
         "to": "Счет 64686473678894779589"}
 
-develop
+
 
 def test_financial_transactions_empty_list(path_empty_list):
     assert financial_transactions(path_empty_list) == []
