@@ -23,6 +23,7 @@ def get_mask_card_number(card_number: str) -> str:
     else:
         logger.warning(f"Неверный номер карты: длина номера - {len(card_number)}")
         return []
+        return None
 
 
 def get_mask_account(account_number: str) -> str:
@@ -34,3 +35,4 @@ def get_mask_account(account_number: str) -> str:
     else:
         logger.warning(f"Неверный номер счета: длина номера - {len(account_number)}")
         return []
+        return None

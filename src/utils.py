@@ -1,10 +1,14 @@
 import json
 import logging
 import os
+import logging
+import os
+
 from json import JSONDecodeError
 from typing import Any
 
 from src.external_api import currency_conversion
+
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 rel_file_path = os.path.join(current_dir, "../logs/masks.log")
@@ -18,22 +22,36 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
 
+
 def financial_transactions(path: str) -> list:
     """Функция принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
     try:
         logger.info("Открытие файла с транзакциями")
+
+def financial_transactions(path: str) -> list:
+    """Функция принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
+    try:
+ feature/homework_12_2
+        logger.info("Открытие файла с транзакциями")
+
         with open(path, encoding="utf-8") as financial_file:
             try:
                 transactions = json.load(financial_file)
             except JSONDecodeError:
                 return []
         if not isinstance(transactions, list):
+
             logger.error("Список транзакций пуст")
             return []
         logger.info("Создан список словарей с данными о финансовых транзакциях")
         return transactions
     except FileNotFoundError:
         logger.error("Файл не найден")
+
+            return []
+        return transactions
+    except FileNotFoundError:
+
         return []
 
 
@@ -45,4 +63,6 @@ def transaction_amount(trans: dict, currency: str = "RUB") -> Any:
     else:
         amount = currency_conversion(trans)
         logger.error("Код валюты транзакции не RUB, произведена конвертация")
+    else:
+        amount = currency_conversion(trans)
     return amount
