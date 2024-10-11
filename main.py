@@ -59,7 +59,7 @@ def sorting_by_date(transactions: list) -> list:
     if sorted_by_date in ["да", "yes", "lf"]:
         rev = input("Отсортировать по возрастанию или по убыванию? Да/Нет").lower()
         if rev == "по возрастанию":
-            return sort_by_date(transactions, is_reverse=False)
+            return sort_by_date(transactions, reverse_list=False)
         else:
             return sort_by_date(transactions)
     else:
