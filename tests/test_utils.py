@@ -64,6 +64,7 @@ def test_financial_transactions_nofile():
 
 
 
+
 def test_financial_transactions(path):
     assert financial_transactions(path)[0] == {
         "id": 441945886,
@@ -77,6 +78,7 @@ def test_financial_transactions(path):
         "description": "Перевод организации",
         "from": "Maestro 1596837868705199",
         "to": "Счет 64686473678894779589"}
+
 
 
 

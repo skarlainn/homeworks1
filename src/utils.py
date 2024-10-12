@@ -1,14 +1,19 @@
+
+
+import json
+import logging
+import os
 import json
 import logging
 import os
 import logging
 import os
 
+
 from json import JSONDecodeError
 from typing import Any
 
 from src.external_api import currency_conversion
-
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 rel_file_path = os.path.join(current_dir, "../logs/masks.log")
@@ -22,6 +27,9 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
 
+PATH_TO_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "operations.json")
+
+
 
 def financial_transactions(path: str) -> list:
     """Функция принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
@@ -31,8 +39,9 @@ def financial_transactions(path: str) -> list:
 def financial_transactions(path: str) -> list:
     """Функция принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
     try:
- feature/homework_12_2
+
         logger.info("Открытие файла с транзакциями")
+
 
         with open(path, encoding="utf-8") as financial_file:
             try:
@@ -40,13 +49,25 @@ def financial_transactions(path: str) -> list:
             except JSONDecodeError:
                 return []
         if not isinstance(transactions, list):
-
             logger.error("Список транзакций пуст")
             return []
         logger.info("Создан список словарей с данными о финансовых транзакциях")
         return transactions
     except FileNotFoundError:
         logger.error("Файл не найден")
+
+        return []
+
+
+def transaction_amount(transaction: dict) -> Any:
+    """Функция принимает на вход транзакцию и возвращает сумму транзакции в рублях"""
+    if transaction["operationAmount"]["currency"]["code"] == "RUB":
+        amount = transaction["operationAmount"]["amount"]
+        logger.info("Код валюты в транзакции RUB")
+    else:
+        amount = currency_conversion(transaction)
+        logger.error("Код валюты транзакции не RUB, произведена конвертация")
+    return amount
 
             return []
         return transactions
@@ -66,3 +87,4 @@ def transaction_amount(trans: dict, currency: str = "RUB") -> Any:
     else:
         amount = currency_conversion(trans)
     return amount
+
