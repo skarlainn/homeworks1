@@ -3,8 +3,11 @@ from typing import Iterator
 
 def filter_by_currency(transactions: list, value: str) -> Iterator:
     """Функция возвращает операции в которых указана валюта"""
-    return (transaction for transaction in transactions if
-            transaction.get("operationAmount").get("currency").get("code") == value)
+    return (
+        transaction
+        for transaction in transactions
+        if transaction.get("operationAmount").get("currency").get("code") == value
+    )
 
 
 def transaction_descriptions(transactions: list) -> Iterator:

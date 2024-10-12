@@ -1,7 +1,15 @@
 
+
 import json
 import logging
 import os
+import json
+import logging
+import os
+import logging
+import os
+
+
 from json import JSONDecodeError
 from typing import Any
 
@@ -18,13 +26,23 @@ file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(me
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
+
 PATH_TO_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "operations.json")
+
 
 
 def financial_transactions(path: str) -> list:
     """Функция принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
     try:
         logger.info("Открытие файла с транзакциями")
+
+def financial_transactions(path: str) -> list:
+    """Функция принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях."""
+    try:
+
+        logger.info("Открытие файла с транзакциями")
+
+
         with open(path, encoding="utf-8") as financial_file:
             try:
                 transactions = json.load(financial_file)
@@ -37,6 +55,7 @@ def financial_transactions(path: str) -> list:
         return transactions
     except FileNotFoundError:
         logger.error("Файл не найден")
+
         return []
 
 
@@ -49,3 +68,23 @@ def transaction_amount(transaction: dict) -> Any:
         amount = currency_conversion(transaction)
         logger.error("Код валюты транзакции не RUB, произведена конвертация")
     return amount
+
+            return []
+        return transactions
+    except FileNotFoundError:
+
+        return []
+
+
+def transaction_amount(trans: dict, currency: str = "RUB") -> Any:
+    """Функция принимает на вход транзакцию и возвращает сумму транзакции в рублях"""
+    if trans["operationAmount"]["currency"]["code"] == currency:
+        amount = trans["operationAmount"]["amount"]
+        logger.info("Код валюты в транзакции RUB")
+    else:
+        amount = currency_conversion(trans)
+        logger.error("Код валюты транзакции не RUB, произведена конвертация")
+    else:
+        amount = currency_conversion(trans)
+    return amount
+

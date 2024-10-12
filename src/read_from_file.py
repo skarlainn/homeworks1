@@ -20,12 +20,16 @@ PATH_TO_CSV = os.path.join(os.path.dirname(__file__), "..", "data", "transaction
 PATH_TO_EXCEL = os.path.join(os.path.dirname(__file__), "..", "data", "transactions_excel.xlsx")
 
 
+
 def read_from_csv(path: str, sep: str = ";") -> list[dict[Any, Any]]:
+
+def read_from_csv(path: str, sep: str = ";") -> list:
     """Функция, которая принимает на вход путь к файлу с транзакциями в формате .csv и возвращает
     список словарей с транзакциями"""
     try:
         logger.info(f"Чтение файла {path}")
         df = pd.read_csv(path, sep=sep)
+
         transactions = df.to_dict(orient="records")
         result = []
         for transaction in transactions:
@@ -51,6 +55,10 @@ def read_from_csv(path: str, sep: str = ";") -> list[dict[Any, Any]]:
             result.append(transaction_dict)
         logger.info("Возврат списка словарей с транзакциями")
         return result
+
+        logger.info("Возврат списка словарей с транзакциями")
+        return df.to_dict(orient="records")
+
 
     except pd.errors.EmptyDataError:
         logger.warning(f"Ошибка: Файл {path} пустой.")
@@ -91,6 +99,8 @@ def read_from_excel(path: str, sheet_name: int = 0) -> list:
             result.append(transaction_dict)
         logger.info("Возврат списка словарей с транзакциями")
         return result
+        logger.info("Возврат списка словарей с транзакциями")
+        return df.to_dict(orient="records")
 
     except pd.errors.EmptyDataError:
         logger.warning(f"Ошибка: Лист {sheet_name} в файле {path} пустой.")
@@ -99,3 +109,6 @@ def read_from_excel(path: str, sheet_name: int = 0) -> list:
     except FileNotFoundError:
         logger.warning(f"Файл {path} не найден.")
         return []
+
+        return []
+
